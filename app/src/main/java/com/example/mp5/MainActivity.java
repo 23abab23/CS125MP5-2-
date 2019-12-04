@@ -13,10 +13,10 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
-    /**
-     * Bitmap used to hold an image such that it can be modified by other activities
-     */
+
+    /** Bitmap used to hold an image such that it can be modified by other activities */
     public static Bitmap modImg;
+
     /**
      * Called when activity starts, loads image and 3 modification buttons
      * @param savedInstanceState
@@ -50,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
         ImageView userImg = findViewById(R.id.imageView2); // Creates a reference for the blank imageview
         loadImage(filePath, userImg);
     }
+
+    /**
+     * Called to load the user selected image into the imageView for the first time
+     * @param filePath String filepath of the user selected image
+     * @param userImg Reference to the imageView in which the image is placed
+     */
     public void loadImage(String filePath, ImageView userImg) {
         Bitmap userBtmp = BitmapFactory.decodeFile(filePath);
         modImg = userBtmp;

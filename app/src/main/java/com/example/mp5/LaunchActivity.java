@@ -16,14 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LaunchActivity extends AppCompatActivity {
-    /**
-     * Unique gallery request code thats created when the user accesses the image gallery
-     */
+
+    /** Unique gallery request code thats created when the user accesses the image gallery */
     public static final int GALLERY_REQUEST_CODE = 209;
-    /**
-     * Unique permission request identifier for the app, read perms
-     */
+
+    /** Unique permission request identifier for the app, read perms */
     public static final int STORAGE_REQUEST_CODE = 314;
+
     /**
      * Function thats called when activity is started, sets up UI and calls requisite functions
      * @param savedInstanceState saved state from the previously terminated instance of this activity (unused)
@@ -100,6 +99,10 @@ public class LaunchActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * Checks for read/write permissions when called, prompts user if perms aren't given
+     */
     public void checkPerms() {
         List<String> permsNeeded = new ArrayList<>(); // Initializes an empty array to hold requested perms
         // Checks if the app has read external storage permissions
