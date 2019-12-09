@@ -11,12 +11,18 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Random;
 
 import io.uuddlrlrba.closepixelate.Pixelate;
@@ -36,11 +42,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Save Button
-        Button save = findViewById(R.id.saveButton);
-        save.setOnClickListener(v -> { // Add Image Saving section to this
-            // Store Image in filesystem
+        Button save = findViewById(R.id.saveButton); // Grabs Save button
+        save.setOnClickListener(v -> { // Creates a handler
+            try { // Try catch to encompass the save function
+                saveImage(); // Calls save function
+            } catch (IOException e) { // Handles IO errors that can be generated
+                e.printStackTrace();
+            }
             startActivity(new Intent(this, LaunchActivity.class));
-            finish();
+            finish(); // Once save completes the activity is closed and the user is sent back to home
         });
         // Restart Button
         Button restart = findViewById(R.id.restartButton); // Grabs Restart button
@@ -49,14 +59,14 @@ public class MainActivity extends AppCompatActivity {
             finish(); // If clicked, user is sent back to launch screen to choose new image
         });
         // Random Effect Button
-        Button randomButton = findViewById(R.id.randomButton);
-        randomButton.setOnClickListener(v -> {
-            randomize();
+        Button randomButton = findViewById(R.id.randomButton); //Grabs random effect button
+        randomButton.setOnClickListener(v -> { // Creates handler
+            randomize(); // Calls randomize upon buttonpress
         });
         Intent intent = getIntent(); // Gets intent used to start activity
         String filePath = intent.getStringExtra("path"); // Extracts the filepath as String
         ImageView userImg = findViewById(R.id.imageView2); // Creates a reference for the blank imageview
-        loadImage(filePath, userImg);
+        loadImage(filePath, userImg); // Loads image into the imageView
     }
 
     /**
@@ -152,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void addSaturation(int factor) {
         double saturationDelta = 0.1 * (factor/100); // Value controls saturation, scales with factor
-        float hue = 1/3 * (factor/100); // Value controls hue, scales with factor
+        float hue = 1/2 * (factor/100); // Value controls hue, scales with factor
         double valueDelta = 0.1 * (factor/100); // Value controls delta, scales with factor
         float[] hsv = new float[3]; // Creates an array to hold the hue, saturation, value data
         hsv[0] = hue; // Assigns values to hsv
@@ -166,5 +176,21 @@ public class MainActivity extends AppCompatActivity {
                 modImg.setPixel(x, y, newColor); // Modifies class image with color shift
             }
         }
+    }
+
+    /**
+     * Called to save the image that is displayed on the user's phone (modImg)
+     * @throws IOException Throws this exception in case of a bad filetype for save
+     */
+    public void saveImage() throws IOException {
+        File f = Environment.getExternalStorageDirectory(); // Opens the phone filesystem
+        File dir = new File(f.getAbsolutePath() + "/image/"); // Creates a folder in filesystem
+        dir.mkdir();
+        File file = new File(dir, System.currentTimeMillis() +".jpg"); // Creates save file as jpg
+        FileOutputStream out = new FileOutputStream(file); // Creates file to save to /image/ uses system clock for filename
+        modImg.compress(Bitmap.CompressFormat.JPEG, 100, out); // Compressess the bitmap to save space
+        Toast.makeText(getApplicationContext(), "Image Save to photo",Toast.LENGTH_SHORT).show();
+        out.flush(); // Shows the user a toast and flushes/closes the filestream
+        out.close();
     }
 }
