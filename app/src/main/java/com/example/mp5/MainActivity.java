@@ -120,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
     }
     /**
      * Adds a certain amount of contrast to the bitmap image
+     * Logic was taken from the thread below
+     * https://stackoverflow.com/questions/12891520/how-to-programmatically-change-contrast-of-a-bitmap-in-android
      * @param factor Double representing the relative contrast to add
      */
     public void addContrast(double factor) {
@@ -158,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Adds saturation to the image
+     * https://stackoverflow.com/questions/12711376/how-to-adjust-hue-saturation-of-a-bitmap provided logic
      * @param factor Random scaling factor used to compute all dependent saturation values
      */
     public void addSaturation(int factor) {
@@ -180,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Called to save the image that is displayed on the user's phone (modImg)
+     * https://stackoverflow.com/questions/649154/save-bitmap-to-location provided code logic
      * @throws IOException Throws this exception in case of a bad filetype for save
      */
     public void saveImage() throws IOException {
