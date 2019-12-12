@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Fry Fry Fry"); // Sets action bar title
         //Save Button
         Button save = findViewById(R.id.saveButton); // Grabs Save button
         save.setOnClickListener(v -> { // Creates a handler

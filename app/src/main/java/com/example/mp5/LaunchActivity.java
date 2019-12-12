@@ -7,10 +7,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,12 @@ public class LaunchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
+        setTitle("Geoff's Frying Fiesta"); // Sets action bar title
+        ImageView splash = findViewById(R.id.splash); // Calls splash imageView
+        String uri = "@drawable/splashart"; // Grabs file uri
+        int imgR = getResources().getIdentifier(uri, null, getPackageName()); // Gets int resource
+        Drawable res = getResources().getDrawable(imgR); // Uses int to create a drawable
+        splash.setImageDrawable(res); // Sets splash art with drawable
         Button loadImage = findViewById(R.id.loadButton); // Loads in the load image button
         loadImage.setOnClickListener(v -> { // Creates a handler for the button
             getImage(); // Calls getImage() if the button is clicked
